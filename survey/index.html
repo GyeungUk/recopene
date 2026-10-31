@@ -210,7 +210,7 @@ main{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:8px 16px
 .opts.stack .opt input:checked + span::before{border-color:#fff;background:var(--leaf);box-shadow:inset 0 0 0 4px var(--leaf),inset 0 0 0 10px #fff}
 /* the two product concepts: the team's A/B boards laid side by side like cards on the table.
    The whole board is the radio; the button baked into the artwork was cropped off and lives here as text, so it can show the pick */
-.concepts{--gap:24px;position:relative;display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
+.concepts{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:28px}
 .concept{--bg:#fde7e7;--cta:linear-gradient(90deg,#dc4a4c,#c92f3d);--tilt:-4deg;position:relative;display:flex;flex-direction:column;border-radius:24px;background:var(--bg);box-shadow:0 0 0 1px rgba(160,30,10,.07),0 24px 40px -30px rgba(160,30,10,.6);transition:transform .45s var(--ease-out),box-shadow .3s,opacity .35s,filter .35s}
 .concept.b{--bg:#fef4e8;--cta:linear-gradient(90deg,#ee7254,#e2533f);--tilt:4deg}
 .concept-pick{position:relative;display:flex;flex-direction:column;flex:1;border-radius:inherit;overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:transparent}
@@ -232,10 +232,9 @@ main{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:8px 16px
 .zoom:hover{transform:scale(1.05)}
 /* boards under ~280px wide (the smallest phones, and the two-up layout on small tablets): the label would touch the title, so just the magnifier */
 @media (max-width:350px),(min-width:561px) and (max-width:660px){ .zoom{padding:9px} .zoom span{display:none} }
-/* a ripe tomato between the two boards, level with the empty margins of their "이런 분께" panels (62% down the 754×892 artwork;
-   a percentage margin follows the width, so it tracks the boards' height at any size) */
-.vs{position:absolute;z-index:3;left:50%;top:0;margin-top:calc((100% - var(--gap)) / 2 * 892 / 754 * .62);display:grid;place-items:center;width:48px;height:44px;translate:-50% -50%;border-radius:50% 50% 46% 46%;background:radial-gradient(circle at 35% 30%,#ff8a63,#f4472a 55%,#c9230f);color:#fff;font-family:var(--f-pop);font-size:17px;line-height:1;padding-top:3px;box-shadow:0 0 0 4px #fff,0 14px 24px -10px rgba(160,30,10,.6);pointer-events:none}
-.vs::before{content:"";position:absolute;left:50%;top:-12px;width:28px;height:17px;translate:-50% 0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 12'%3E%3Cpath d='M10 9L3 2l5 6-7 1 8 1 1 2 1-2 8-1-7-1 5-6z' fill='%232f8a2c'/%3E%3C/svg%3E") center/contain no-repeat}
+/* "VS" between the boards, drawn like the white tag chips printed on them so it reads as part of the set.
+   Halfway down, the boards' inner edges are plain margin beside their "이런 분께" panels, so it never covers text */
+.vs{position:absolute;z-index:3;left:50%;top:50%;display:grid;place-items:center;width:38px;height:38px;translate:-50% -50%;border-radius:50%;background:#fff;color:#c9343c;font-weight:900;font-size:13.5px;line-height:1;letter-spacing:.02em;box-shadow:0 0 0 1px rgba(201,52,60,.14),0 8px 18px -8px rgba(160,30,10,.45);pointer-events:none}
 /* dealt onto the table when the question scrolls in */
 .reveal .q.in .concept{animation:deal .8s var(--ease-out) backwards}
 .reveal .q.in .concept.b{animation-delay:.12s}
@@ -413,9 +412,8 @@ html:has(.viewer[open]){overflow:hidden}
   .opts,.ripe,.scale-ends{padding-left:0}
   .other{width:100%;margin-left:0}
   .opt span{padding:11px 16px;font-size:15.5px}
-  /* phones: the boards stack, the tomato sits in the gap between them */
-  .concepts{grid-template-columns:1fr;--gap:48px}
-  .vs{top:50%;margin-top:0}
+  /* phones: the boards stack, with the "VS" chip in the gap between them */
+  .concepts{grid-template-columns:1fr;gap:36px}
   .concept-cta{font-size:15.5px}
   .viewer{--w:min(calc(100vw - 36px),calc((100svh - 110px) * .845));border-radius:24px}
   .viewer-art{padding:8px 8px 0}
