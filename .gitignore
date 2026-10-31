@@ -1,0 +1,11 @@
+.vercel
+
+# work files that are not part of the site: 3D scenes, renders and AI video drafts (several GB)
+artifacts/
+tomato/
+
+# local tools and secrets
+.claude/
+.env*
+node_modules/
+.DS_Store

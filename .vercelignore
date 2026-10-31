@@ -1,0 +1,6 @@
+artifacts/
+.claude/
+DESIGN_PLAN.md
+tomato/
+survey/SETUP.md
+survey/schema.sql
