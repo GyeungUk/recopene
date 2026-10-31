@@ -5,6 +5,7 @@
 - `tomato-hero.webp` — 887 × 887 RGBA, the left (whole-tomato) cell of `tomato-beauty-atlas.png`, cropped with no repainting. cwebp q90, lossless-quality alpha. Also the hero's fallback `<img>`.
 - `water-splash.webp` — 1536 × 1024 RGBA from `water-splash.png`, cwebp q80.
 - `water-drop.webp` — 1024 × 1024 RGBA from `water-drop.png` (downscaled), cwebp q84.
+- `concept-a.webp`, `concept-b.webp` — 754 × 892 RGB, survey question 3's two product boards (A안 토마토 스킨, B안 토마토 로션). Cropped from the team's 1536 × 1024 A/B board image with no repainting: A at (10, 12)–(764, 904), B at (773, 12)–(1527, 904). The crop drops each board's outer frame and the "…이 더 마음에 들어요" button baked into the bottom, which the survey draws as a live button instead. PIL WebP q90, method 6. These are concept visuals made for the A/B test, not photographs of finished products.
 - `fonts/wanted-sans-subset.woff2` — Wanted Sans variable (wght 400–1000), subset to the characters in `index.html`. Source: https://github.com/wanteddev/wanted-sans (`packages/wanted-sans/fonts/variable/WantedSansVariable.ttf`), SIL OFL 1.1.
 - `fonts/wanted-sans-ks.woff2` — the same font cut to the 2,350 common Hangul syllables (KS X 1001), declared as "Wanted Sans KS". Downloaded only for characters the page cut lacks.
 - `fonts/bagel-fat-one-subset.woff2` — Bagel Fat One, cut to the marquee and finale-slogan strings plus basic Latin. Source: https://github.com/google/fonts (`ofl/bagelfatone/BagelFatOne-Regular.ttf`), SIL OFL 1.1.

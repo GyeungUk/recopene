@@ -16,7 +16,8 @@ alter table public.survey_responses enable row level security;
 -- select created_at, provider,
 --        answers->>'age'                 as 연령대,
 --        answers->>'priority'            as 중요요소,
---        answers->>'copy'                as 선호문구,
+--        answers->>'concept'             as 선호제품,      -- A: 토마토 스킨, B: 토마토 로션
+--        answers->>'copy'                as 선호문구_이전, -- 3번이 소개 문구 A/B였을 때의 응답
 --        (answers->>'intent')::int       as 구매의향,
 --        answers->>'max_price'           as 최대지불금액,
 --        answers->>'no_buy_reason'       as 비구매이유,
@@ -29,6 +30,10 @@ alter table public.survey_responses enable row level security;
 -- order by created_at desc;
 --
 -- 이름 칸이 생기기 전에 응모한 사람은 이름이 비어 있어요(null). 추첨 대상은 prize_entry만 보고 고르세요.
+--
+-- 3번 문항은 2026-10-31에 소개 문구 A/B(copy)에서 제품 카드 A/B(concept)로 바뀌었어요.
+-- 그 전에 낸 응답은 copy만 있고 concept는 비어 있어요(null). 이런 응답을 '응답 수정하기'로 다시 저장하면
+-- 3번을 새로 고르게 되고, 예전 copy 값도 그대로 남아요. 제품 A/B 집계는 concept가 있는 응답만 세세요.
 --
 -- 경품 전달을 마친 뒤(처리방침 2번): 이름은 모두 지우고, 출시 알림을 신청하지 않은 응모자는 번호도 지웁니다.
 -- 내려받은 CSV 파일도 함께 지우세요.

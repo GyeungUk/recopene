@@ -208,13 +208,56 @@ main{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:8px 16px
 .opts.stack .opt span{gap:12px;border-radius:18px;padding:15px 18px}
 .opts.stack .opt span::before{content:"";flex:none;width:20px;height:20px;border-radius:50%;border:2px solid rgba(19,38,26,.45);background:#fff;transition:border-color .2s,box-shadow .2s}
 .opts.stack .opt input:checked + span::before{border-color:#fff;background:var(--leaf);box-shadow:inset 0 0 0 4px var(--leaf),inset 0 0 0 10px #fff}
-/* the two ad copies read like quote cards */
-.opts.copies{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.opts.copies .opt span{flex-direction:column;align-items:flex-start;gap:10px;height:100%;padding:20px 20px 22px;border-radius:22px;font-weight:600;font-size:15.5px;line-height:1.65;overflow:hidden}
-.opts.copies .opt span::after{content:"\201C";position:absolute;right:14px;top:-6px;font-family:Georgia,serif;font-size:84px;line-height:1;color:rgba(19,38,26,.07)}
-.opts.copies .opt input:checked + span::after{color:rgba(255,255,255,.22)}
-.opts.copies em{font-style:normal;display:inline-block;padding:4px 12px;border-radius:999px;background:var(--peach);color:var(--tomato-ink);font-weight:800;font-size:14px}
-.opts.copies .opt input:checked + span em{background:#fff;color:var(--leaf-ink)}
+/* the two product concepts: the team's A/B boards laid side by side like cards on the table.
+   The whole board is the radio; the button baked into the artwork was cropped off and lives here as text, so it can show the pick */
+.concepts{--gap:24px;position:relative;display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
+.concept{--bg:#fde7e7;--cta:linear-gradient(90deg,#dc4a4c,#c92f3d);--tilt:-4deg;position:relative;display:flex;flex-direction:column;border-radius:24px;background:var(--bg);box-shadow:0 0 0 1px rgba(160,30,10,.07),0 24px 40px -30px rgba(160,30,10,.6);transition:transform .45s var(--ease-out),box-shadow .3s,opacity .35s,filter .35s}
+.concept.b{--bg:#fef4e8;--cta:linear-gradient(90deg,#ee7254,#e2533f);--tilt:4deg}
+.concept-pick{position:relative;display:flex;flex-direction:column;flex:1;border-radius:inherit;overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.concept-pick input{position:absolute;inset:0;z-index:1;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.concept-pick img{display:block;width:100%;height:auto}
+.concept-cta{display:flex;align-items:center;justify-content:center;gap:10px;margin:auto 4.8% 16px;min-height:54px;padding:10px 18px;border-radius:999px;background:var(--cta);color:#fff;font-weight:800;font-size:16px;line-height:1.4;text-align:center;text-wrap:balance;box-shadow:0 14px 24px -16px rgba(196,36,44,.95);transition:background .25s,box-shadow .25s}
+.concept-cta::before{content:"";flex:none;width:18px;height:18px;border-radius:50%;box-shadow:inset 0 0 0 2.5px rgba(255,255,255,.9)}
+.concept-pick input:checked ~ .concept-cta{background:var(--leaf-ink);box-shadow:0 14px 24px -14px rgba(20,133,58,.9)}
+.concept-pick input:checked ~ .concept-cta::before{width:16px;height:12px;border-radius:0;box-shadow:none;background:currentColor;animation:pop .4s var(--ease-back);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 10'%3E%3Cpath d='M1.5 5l3.5 3.5L12.5 1' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 10'%3E%3Cpath d='M1.5 5l3.5 3.5L12.5 1' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
+.concept:hover{transform:translateY(-4px);box-shadow:0 0 0 1px rgba(160,30,10,.1),0 30px 44px -28px rgba(160,30,10,.65)}
+.concept:has(input:checked){transform:translateY(-4px);box-shadow:0 0 0 4px var(--leaf),0 30px 44px -28px rgba(20,133,58,.7)}
+.concept:has(input:focus-visible){outline:3px solid var(--leaf-ink);outline-offset:5px}
+/* once one is picked, the other steps back (and comes forward again under the pointer) */
+.concepts:has(input:checked) .concept:not(:has(input:checked)):not(:hover){opacity:.62;filter:saturate(.5)}
+/* "크게 보기": opens the board large enough to read its small print */
+.zoom{position:absolute;z-index:2;top:12px;right:12px;display:inline-flex;align-items:center;gap:6px;padding:7px 14px 7px 11px;border:0;border-radius:999px;background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--ink);font-weight:800;font-size:13.5px;line-height:1.4;box-shadow:0 8px 18px -10px rgba(19,38,26,.5);cursor:zoom-in;transition:transform .25s var(--ease-out)}
+.zoom::after{content:"";position:absolute;inset:-6px}
+.zoom svg{width:16px;height:16px;flex:none}
+.zoom:hover{transform:scale(1.05)}
+/* boards under ~280px wide (the smallest phones, and the two-up layout on small tablets): the label would touch the title, so just the magnifier */
+@media (max-width:350px),(min-width:561px) and (max-width:660px){ .zoom{padding:9px} .zoom span{display:none} }
+/* a ripe tomato between the two boards, level with the empty margins of their "이런 분께" panels (62% down the 754×892 artwork;
+   a percentage margin follows the width, so it tracks the boards' height at any size) */
+.vs{position:absolute;z-index:3;left:50%;top:0;margin-top:calc((100% - var(--gap)) / 2 * 892 / 754 * .62);display:grid;place-items:center;width:48px;height:44px;translate:-50% -50%;border-radius:50% 50% 46% 46%;background:radial-gradient(circle at 35% 30%,#ff8a63,#f4472a 55%,#c9230f);color:#fff;font-family:var(--f-pop);font-size:17px;line-height:1;padding-top:3px;box-shadow:0 0 0 4px #fff,0 14px 24px -10px rgba(160,30,10,.6);pointer-events:none}
+.vs::before{content:"";position:absolute;left:50%;top:-12px;width:28px;height:17px;translate:-50% 0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 12'%3E%3Cpath d='M10 9L3 2l5 6-7 1 8 1 1 2 1-2 8-1-7-1 5-6z' fill='%232f8a2c'/%3E%3C/svg%3E") center/contain no-repeat}
+/* dealt onto the table when the question scrolls in */
+.reveal .q.in .concept{animation:deal .8s var(--ease-out) backwards}
+.reveal .q.in .concept.b{animation-delay:.12s}
+.reveal .q.in .vs{animation:pop .6s var(--ease-back) .4s backwards}
+@keyframes deal{from{opacity:0;transform:translateY(34px) rotate(var(--tilt))}}
+
+/* a bigger look at one board, with the same pick button */
+.viewer{--w:min(754px,calc(100vw - 48px),calc((100svh - 130px) * .845));max-width:calc(100vw - 16px);margin:auto;padding:0;border:0;border-radius:30px;background:#fff;color:var(--ink);box-shadow:0 40px 90px -30px rgba(19,38,26,.7)}
+.viewer[open]{animation:viewer-in .4s var(--ease-out)}
+.viewer::backdrop{background:rgba(19,38,26,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+@keyframes viewer-in{from{opacity:0;transform:translateY(18px) scale(.97)}}
+html:has(.viewer[open]){overflow:hidden}
+.viewer-art{position:relative;padding:12px 12px 0}
+.viewer-art img{display:block;width:var(--w);height:auto;border-radius:20px}
+.viewer-close{position:absolute;top:22px;right:22px;display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,.92);color:var(--ink);box-shadow:0 8px 18px -10px rgba(19,38,26,.5);cursor:pointer}
+.viewer-close svg{width:16px;height:16px}
+.viewer-actions{display:flex;gap:10px;padding:12px}
+.viewer-actions button{display:flex;align-items:center;justify-content:center;gap:8px;min-height:54px;border-radius:999px;font-weight:800;font-size:16px;cursor:pointer;transition:transform .3s var(--ease-out),background .2s}
+.viewer-actions button:hover{transform:translateY(-2px)}
+.viewer-other{flex:none;padding:0 22px;border:2px solid var(--leaf);background:#fff;color:var(--leaf-ink)}
+.viewer-pick{flex:1;padding:0 20px;border:0;background:linear-gradient(135deg,#ff6a48,var(--tomato) 45%,var(--tomato-ink));color:#fff;box-shadow:0 16px 28px -16px rgba(255,65,40,.8)}
+.viewer-pick.on{background:var(--leaf-ink);box-shadow:0 16px 28px -16px rgba(20,133,58,.8)}
 /* intent: five tomatoes from green to ripe red */
 .ripe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:18px;padding-left:50px}
 .ripe .opt span{flex-direction:column;justify-content:center;gap:2px;padding:12px 4px 10px;border-radius:20px;font-size:16px;font-weight:800}
@@ -370,7 +413,15 @@ main{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:8px 16px
   .opts,.ripe,.scale-ends{padding-left:0}
   .other{width:100%;margin-left:0}
   .opt span{padding:11px 16px;font-size:15.5px}
-  .opts.copies{grid-template-columns:1fr}
+  /* phones: the boards stack, the tomato sits in the gap between them */
+  .concepts{grid-template-columns:1fr;--gap:48px}
+  .vs{top:50%;margin-top:0}
+  .concept-cta{font-size:15.5px}
+  .viewer{--w:min(calc(100vw - 36px),calc((100svh - 110px) * .845));border-radius:24px}
+  .viewer-art{padding:8px 8px 0}
+  .viewer-close{top:16px;right:16px}
+  .viewer-actions{padding:8px}
+  .viewer-other{padding:0 18px}
   .ripe{gap:7px}
   .ripe svg{width:34px;height:34px}
   .ripe .opt span{padding:10px 2px 8px;border-radius:16px}
@@ -562,10 +613,25 @@ main{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:8px 16px
     </fieldset>
 
     <fieldset class="q" data-required>
-      <legend><span class="num">3</span><span>두 가지 RE:COPENE 소개 문구&nbsp;중 더 마음이&nbsp;가고 사고 싶은 쪽은?<span class="hint">제품 콘셉트를 비교하기 위한 예시 문구이며, 실제 효능을 표시하는 것이 아닙니다.</span></span></legend>
-      <div class="opts copies">
-        <label class="opt"><input type="radio" name="copy" value="A"><span><em>A안</em>“버려지던 광명 못난이 토마토의 재탄생! 지구와 피부를 모두 지키는 착한 업사이클링 비건 스킨케어, RE:COPENE”</span></label>
-        <label class="opt"><input type="radio" name="copy" value="B"><span><em>B안</em>“토마토 속 라이코펜으로 완성하는 생기&nbsp;충전! 지친 피부에 즉각적인 수분과 진정을&nbsp;주는 안심 스킨케어, RE:COPENE”</span></label>
+      <legend><span class="num">3</span><span>두 가지 RE:COPENE 제품 중 더 마음이&nbsp;가고 사고 싶은 쪽은?<span class="hint">제품 콘셉트를 비교하기 위한 예시 이미지이며, 실제 효능을 표시하는 것이 아닙니다.</span></span></legend>
+      <div class="concepts">
+        <div class="concept" data-concept="A">
+          <label class="concept-pick">
+            <input type="radio" name="concept" value="A" aria-labelledby="ctaA" aria-describedby="imgA">
+            <img id="imgA" src="../assets/concept-a.webp" width="754" height="892" loading="lazy" decoding="async" alt="A안 토마토 스킨. 산뜻하게 시작하는 데일리 수분 진정 토너. 가벼운 워터 제형이 피부에 빠르게 흡수되어 산뜻하고 촉촉한 피부 컨디션을 도와주는 데일리 토너입니다. 이런 분께 추천해요: 번들거림이 고민인 지성·복합성 피부, 피부 컨디션에 민감한 트러블 고민형, 산뜻하고 가벼운 사용감을 선호하는 분. 주요 특징: 끈적임 없이 가볍게 흡수되는 산뜻한 워터 제형, 토마토 유래 성분으로 촉촉하고 편안한 피부 컨디션을 돕는 수분·진정 케어, 아침저녁 부담 없이 쓰는 데일리 루틴.">
+            <span class="concept-cta" id="ctaA">토마토 스킨이 더&nbsp;마음에 들어요</span>
+          </label>
+          <button class="zoom" type="button" data-zoom="A" aria-label="A안 토마토 스킨 크게 보기"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 11l3.5 3.5M7 4.8v4.4M4.8 7h4.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>크게 보기</span></button>
+        </div>
+        <div class="concept b" data-concept="B">
+          <label class="concept-pick">
+            <input type="radio" name="concept" value="B" aria-labelledby="ctaB" aria-describedby="imgB">
+            <img id="imgB" src="../assets/concept-b.webp" width="754" height="892" loading="lazy" decoding="async" alt="B안 토마토 로션. 바쁜 아침, 하나로 간편하게 채우는 보습 로션. 여러 단계를 줄여도 충분한 보습감을 느낄 수 있는 쫀쫀한 로션 제형으로, 바쁜 일상 속 피부를 간편하고 촉촉하게 케어해 줍니다. 이런 분께 추천해요: 바쁜 일상 속 간편한 루틴을 원하시는 분, 속건조로 보습이 필요한 분, 여러 단계가 번거로운 직장인과 학생. 주요 특징: 스킨 단계 없이 하나만으로도 간편한 3분 올인원 케어, 쫀쫀한 제형으로 오래 지속되는 촉촉한 보습감, 토출압 걱정 없이 깔끔하게 쓰는 편리한 펌프형 용기.">
+            <span class="concept-cta" id="ctaB">토마토 로션이 더&nbsp;마음에 들어요</span>
+          </label>
+          <button class="zoom" type="button" data-zoom="B" aria-label="B안 토마토 로션 크게 보기"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 11l3.5 3.5M7 4.8v4.4M4.8 7h4.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>크게 보기</span></button>
+        </div>
+        <span class="vs" aria-hidden="true">VS</span>
       </div>
     </fieldset>
 
@@ -715,6 +781,18 @@ main{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:8px 16px
     </div>
   </section>
 </main>
+
+<!-- question 3: one board at a readable size (filled in by the script) -->
+<dialog class="viewer" id="viewer" aria-label="크게 보기">
+  <div class="viewer-art">
+    <img id="viewerImg" alt="" width="754" height="892">
+    <button class="viewer-close" id="viewerClose" type="button" aria-label="닫기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+  </div>
+  <div class="viewer-actions">
+    <button class="viewer-other" id="viewerOther" type="button">B안 보기</button>
+    <button class="viewer-pick" id="viewerPick" type="button">A안으로 고를게요</button>
+  </div>
+</dialog>
 
 <footer class="foot">Team HEEHEE · 광명시 청년생각 펼침 사업 2026<span class="sep" aria-hidden="true"> · </span><a href="/survey/privacy.html" target="_blank" rel="noopener">개인정보 처리방침</a></footer>
 
@@ -903,9 +981,40 @@ main{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:8px 16px
     this.value = d.length < 4 ? d : d.length < 8 ? d.slice(0,3)+'-'+d.slice(3) : d.slice(0,3)+'-'+d.slice(3,d.length-4)+'-'+d.slice(-4);
   });
 
+  // question 3's viewer: one board large enough to read, with a button to pick it from there
+  var viewer = $('viewer'), viewing = 'A';
+  function conceptRadio(key){ return document.querySelector('#viewForm input[name=concept][value="' + key + '"]'); }
+  function showConcept(key){
+    var img = $('img' + key), picked = conceptRadio(key).checked;
+    viewing = key;
+    $('viewerImg').src = img.currentSrc || img.src;
+    $('viewerImg').alt = img.alt;
+    viewer.setAttribute('aria-label', key + '안 크게 보기');
+    $('viewerOther').textContent = (key === 'A' ? 'B' : 'A') + '안 보기';
+    $('viewerPick').textContent = picked ? key + '안을 골랐어요' : key + '안으로 고를게요';
+    $('viewerPick').classList.toggle('on', picked);
+  }
+  if(typeof viewer.showModal === 'function'){
+    document.querySelectorAll('.zoom').forEach(function(b){
+      b.addEventListener('click', function(){ showConcept(b.dataset.zoom); viewer.showModal(); });
+    });
+    $('viewerOther').addEventListener('click', function(){ showConcept(viewing === 'A' ? 'B' : 'A'); });
+    $('viewerPick').addEventListener('click', function(){
+      var r = conceptRadio(viewing);
+      if(!r.checked){ r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
+      viewer.close();
+    });
+    $('viewerClose').addEventListener('click', function(){ viewer.close(); });
+    // a tap on the dimmed backdrop closes it too
+    viewer.addEventListener('click', function(e){ if(e.target === viewer) viewer.close(); });
+  }else{
+    // browsers without <dialog> (iOS before 15.4) keep the boards and pinch-zoom
+    document.querySelectorAll('.zoom').forEach(function(b){ b.hidden = true; });
+  }
+
   // puts the stored response back into the form so it can be changed and saved again
   function fillForm(a){
-    ['age','priority','copy','intent','max_price','no_buy_reason'].forEach(function(name){
+    ['age','priority','concept','intent','max_price','no_buy_reason'].forEach(function(name){
       document.querySelectorAll('#viewForm input[name="' + name + '"]').forEach(function(r){ r.checked = r.value === String(a[name]); });
     });
     var other = a.no_buy_reason === '기타';
@@ -920,9 +1029,12 @@ main{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:8px 16px
     $('consent').checked = !!a.consent;
     syncPerks(); updateProgress();
   }
+  var editNoteText = $('editNote').textContent;
   $('editAnswers').addEventListener('click', function(){
     fillForm(saved);
     setEditing(true);
+    // responses from before question 3 became the A/B product boards have no answer to it yet
+    $('editNote').textContent = saved.concept ? editNoteText : '지난번 응답을 불러왔어요. 3번 문항이 새로 바뀌었으니 다시 골라 주세요.';
     $('formErr').hidden = true;
     show('viewForm'); window.scrollTo(0,0);
     $('formTitle').focus({ preventScroll: true });
@@ -973,7 +1085,7 @@ main{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:8px 16px
     var answers = {
       age: fd.get('age'),
       priority: fd.get('priority'),
-      copy: fd.get('copy'),
+      concept: fd.get('concept'),
       intent: Number(fd.get('intent')),
       max_price: fd.get('max_price'),
       no_buy_reason: fd.get('no_buy_reason'),
@@ -985,6 +1097,8 @@ main{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:8px 16px
       over14: true,
       consent: true
     };
+    // the earlier question 3 (ad copy A/B) is gone from the form; an edit keeps that old answer instead of dropping it
+    if(saved && saved.copy) answers.copy = saved.copy;
 
     $('submit').disabled = true;
     var r = await fetch('/api/submit', {
