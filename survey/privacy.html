@@ -66,7 +66,7 @@ th{background:var(--mint);font-weight:800;white-space:nowrap}
 
 <main>
   <h1>개인정보 처리방침</h1>
-  <p class="lead">Team HEEHEE(이하 '팀')는 RE:COPENE 소비자 조사(이하 '설문')를 운영하면서 ‘개인정보 보호법’에 따라 참여자의 개인정보를 다음과 같이 처리합니다.</p>
+  <p class="lead">Team HEEHEE(이하 '팀')는 RE:COPENE 웹사이트(recopene.site)와 소비자 조사(이하 '설문')를 운영하면서 ‘개인정보 보호법’에 따라 방문자와 참여자의 개인정보를 다음과 같이 처리합니다.</p>
 
   <h2>1. 처리 목적과 항목</h2>
   <div class="scroll"><table>
@@ -75,6 +75,7 @@ th{background:var(--mint);font-weight:800;white-space:nowrap}
     <tr><td data-label="구분">선택(경품 응모)</td><td data-label="항목">이름, 휴대전화 번호</td><td data-label="목적">경품 추첨, 당첨자 확인, 당첨 안내 및 전달</td></tr>
     <tr><td data-label="구분">선택(출시 알림)</td><td data-label="항목">휴대전화 번호</td><td data-label="목적">RE:COPENE 출시 소식 및 50% 할인 쿠폰 발송(광고성 정보)</td></tr>
     <tr><td data-label="구분">자동 생성</td><td data-label="항목">로그인 유지용 쿠키·브라우저 저장소, 접속 기록(IP 주소, 브라우저 정보)</td><td data-label="목적">로그인 상태 유지(응답 확인·수정), 보안 및 부정 이용 방지</td></tr>
+    <tr><td data-label="구분">자동 수집(방문 분석)</td><td data-label="항목">Google Analytics 쿠키(_ga), 방문한 페이지, 유입 경로(이전 사이트), 기기·브라우저 종류, 접속 지역(IP 주소로 추정하며 IP 주소 자체는 저장하지 않음)</td><td data-label="목적">방문자 수·유입 경로 등 사이트 이용 통계 분석 (로그인 정보·설문 응답과 연결하지 않음)</td></tr>
   </table></div>
   <p>만 14세 미만 아동의 개인정보는 수집하지 않습니다.</p>
 
@@ -85,22 +86,24 @@ th{background:var(--mint);font-weight:800;white-space:nowrap}
     <li>출시 알림 번호: 출시 안내와 쿠폰 발송을 마치는 즉시 파기</li>
     <li>로그인 정보(쿠키·브라우저 저장소): 로그아웃하면 즉시 삭제 (카카오 로그인 쿠키는 최대 7일 후 자동 만료)</li>
     <li>접속 기록: 서비스 운영 업체(Vercel·Supabase)의 로그 보관 기간이 지나면 자동 삭제</li>
+    <li>방문 분석 정보: Google Analytics의 데이터 보관 기간(2개월)이 지나면 자동 삭제 (분석 쿠키는 마지막 방문 2년 뒤 자동 만료)</li>
   </ul>
   <p>전자적 파일은 복구할 수 없는 방법으로 데이터베이스에서 삭제합니다.</p>
-  <p>브라우저 설정에서 쿠키·사이트 데이터 저장을 막을 수 있지만, 이 경우 로그인이 유지되지 않아 설문에 참여할 수 없습니다.</p>
+  <p>브라우저 설정에서 쿠키·사이트 데이터 저장을 막을 수 있지만, 이 경우 로그인이 유지되지 않아 설문에 참여할 수 없습니다. 방문 분석만 거부하려면 <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics 차단 부가 기능</a>을 설치하면 되며, 이 경우에도 설문 참여에는 영향이 없습니다.</p>
 
   <h2>3. 제3자 제공</h2>
   <p>팀은 참여자의 개인정보를 제3자에게 제공하지 않습니다. 다만 법령에 따라 요구되는 경우는 예외로 합니다.</p>
 
   <h2>4. 처리 위탁과 국외 이전</h2>
-  <p>설문 운영을 위해 아래 업체의 클라우드 서비스를 이용하며, 이 과정에서 개인정보가 해외에 보관·처리됩니다.</p>
+  <p>웹사이트와 설문 운영을 위해 아래 업체의 서비스를 이용하며, 이 과정에서 개인정보가 해외에 보관·처리됩니다.</p>
   <div class="scroll"><table>
     <tr><th>이전받는 자</th><th>국가</th><th>항목</th><th>목적·방법</th></tr>
     <tr><td data-label="이전받는 자">Supabase Inc.<br>(privacy@supabase.com)</td><td data-label="국가">싱가포르</td><td data-label="항목">1번의 모든 항목</td><td data-label="목적·방법">구글 로그인 처리, 응답 데이터베이스 보관 · 로그인과 설문 제출 시 네트워크로 전송</td></tr>
     <tr><td data-label="이전받는 자">Vercel Inc.<br>(privacy@vercel.com)</td><td data-label="국가">미국</td><td data-label="항목">1번의 모든 항목(전송 중 처리)</td><td data-label="목적·방법">웹사이트·서버 기능 운영 · 접속 시 네트워크로 전송</td></tr>
+    <tr><td data-label="이전받는 자">Google LLC<br>(policies.google.com/privacy)</td><td data-label="국가">미국</td><td data-label="항목">1번의 방문 분석 항목</td><td data-label="목적·방법">방문 통계 분석(Google Analytics) · 페이지를 열 때 네트워크로 전송</td></tr>
   </table></div>
-  <p>보유 기간은 2번과 같습니다. 국외 이전을 원하지 않으면 설문에 참여하지 않거나, 아래 연락처로 삭제를 요청할 수 있습니다. 이 경우 설문 참여와 경품 응모·출시 알림이 제한됩니다.</p>
-  <p>카카오와 구글은 로그인 확인을 위해 이용하며, 팀이 이들에게 개인정보를 제공하지 않습니다.</p>
+  <p>보유 기간은 2번과 같습니다. 국외 이전을 원하지 않으면 설문에 참여하지 않거나, 아래 연락처로 삭제를 요청할 수 있습니다. 이 경우 설문 참여와 경품 응모·출시 알림이 제한됩니다. 방문 분석 정보의 이전은 2번의 차단 부가 기능으로 거부할 수 있습니다.</p>
+  <p>카카오와 구글 로그인은 로그인 확인에만 이용하며, 로그인으로 받은 정보를 카카오·구글에 제공하지 않습니다. Google Analytics에는 위 표의 방문 분석 항목만 전송됩니다.</p>
 
   <h2>5. 참여자의 권리</h2>
   <p>참여자는 언제든지 자신의 개인정보에 대한 열람, 정정, 삭제, 처리 정지 및 동의 철회를 요청할 수 있습니다. 설문 응답과 경품 응모·출시 알림 신청은 설문 페이지에 다시 로그인해 ‘응답 수정하기’로 직접 고치거나 취소할 수도 있으며, 체크를 해제하고 저장하면 그 항목에만 쓰던 이름·휴대전화 번호는 바로 삭제됩니다. 아래 개인정보 보호책임자에게 이메일로 요청하면 지체 없이 처리합니다.</p>
@@ -131,6 +134,7 @@ th{background:var(--mint);font-weight:800;white-space:nowrap}
   <p>이 처리방침은 2026년 10월 30일부터 적용됩니다.</p>
   <p>변경 내역: 2026년 10월 30일, 경품 응모 수집 항목에 이름 추가 (이전: 휴대전화 번호만 수집)</p>
   <p>변경 내역: 2026년 10월 31일, 응답 수정 기능 추가에 맞춰 이용 목적·로그인 정보 보유 기간·수집 항목(구글 프로필 사진 주소, 접속 기록) 보완</p>
+  <p>변경 내역: 2026년 11월 2일, 방문 통계 분석(Google Analytics) 도입에 맞춰 적용 범위(웹사이트 방문자)·자동 수집 항목·보유 기간·거부 방법·국외 이전(Google LLC) 추가</p>
 </main>
 
 <footer class="foot">Team HEEHEE · 광명시 청년생각 펼침 사업 2026</footer>
