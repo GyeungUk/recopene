@@ -13,6 +13,19 @@
   gtag('js', new Date());
 
   gtag('config', 'G-E2WV2R00LN');
+
+  // survey funnel events: only the survey id goes to GA4, never names, phone numbers or free-text answers
+  function trackSurveyStart() {
+    gtag('event', 'survey_start', {
+      survey_id: 'tomato_survey'
+    });
+  }
+
+  function trackSurveyComplete() {
+    gtag('event', 'survey_complete', {
+      survey_id: 'tomato_survey'
+    });
+  }
 </script>
 <title>RE:COPENE 소비자 조사</title>
 <meta name="description" content="광명시 못난이 토마토 업사이클링 스킨케어 RE:COPENE 소비자 조사. 카카오 또는 구글 계정으로 로그인하고 1분 안에 참여해 주세요.">
@@ -900,8 +913,30 @@ html:has(.viewer[open]){overflow:hidden}
   // the back button from the login page can restore this page with both buttons still disabled
   window.addEventListener('pageshow', function(e){ if(e.persisted) document.querySelectorAll('.sns').forEach(function(b){ b.disabled = false; }); });
 
+  // GA4 survey_start: once per response attempt, on the first real answer to question 1.
+  // The flag survives a reload in this tab so a refresh mid-survey is not a second start;
+  // editing an already-saved response is not a new attempt.
+  var START_FLAG = 'recopene_ga_survey_start';
+  function startFlag(set){
+    try{
+      if(set === undefined) return sessionStorage.getItem(START_FLAG) === '1';
+      if(set) sessionStorage.setItem(START_FLAG, '1'); else sessionStorage.removeItem(START_FLAG);
+    }catch(e){}
+    return false;
+  }
+  var startSent = startFlag();
+  document.querySelectorAll('#viewForm input[name=age]').forEach(function(r){
+    r.addEventListener('change', function(){
+      if(startSent || saved || editing || !r.checked) return;
+      startSent = true; startFlag(true);
+      try{ trackSurveyStart(); }catch(err){}
+    });
+  });
+
   $('logout').addEventListener('click', async function(){
     await Promise.all([db.auth.signOut(), fetch('/api/logout', { method: 'POST' })]);
+    // the next person on this device starts a new attempt
+    startSent = false; startFlag(false);
     // clear the filled-in answers so the next person on this device starts blank
     setEditing(false);
     $('viewForm').reset();
@@ -1047,8 +1082,10 @@ html:has(.viewer[open]){overflow:hidden}
     $('formTitle').focus({ preventScroll: true });
   });
 
+  var submitting = false;
   $('viewForm').addEventListener('submit', async function(e){
     e.preventDefault();
+    if(submitting) return;
     var form = e.currentTarget, err = $('formErr');
     var gaps = missing(form);
     if(gaps.length){
@@ -1107,13 +1144,20 @@ html:has(.viewer[open]){overflow:hidden}
     // the earlier question 3 (ad copy A/B) is gone from the form; an edit keeps that old answer instead of dropping it
     if(saved && saved.copy) answers.copy = saved.copy;
 
+    // only this account's first successful save is a completion; saving an edit is not counted again
+    var firstSave = !saved && !editing;
+    submitting = true;
     $('submit').disabled = true;
-    var r = await fetch('/api/submit', {
-      method: 'POST',
-      headers: Object.assign({ 'Content-Type': 'application/json' }, await authHeaders()),
-      body: JSON.stringify({ answers: answers })
-    }).catch(function(){ return null; });
+    var r = null;
+    try{
+      r = await fetch('/api/submit', {
+        method: 'POST',
+        headers: Object.assign({ 'Content-Type': 'application/json' }, await authHeaders()),
+        body: JSON.stringify({ answers: answers })
+      });
+    }catch(err){ r = null; }
     $('submit').disabled = false;
+    submitting = false;
 
     if(r && r.ok){
       var wasEditing = editing;
@@ -1121,6 +1165,11 @@ html:has(.viewer[open]){overflow:hidden}
       setEditing(false);
       showDone(wasEditing); window.scrollTo(0,0);
       $('doneTitle').focus({ preventScroll: true });
+      // counted only after the page has moved on: a failing analytics call must not hide a saved response
+      if(firstSave){
+        startSent = false; startFlag(false);
+        try{ trackSurveyComplete(); }catch(err){}
+      }
       return;
     }
     err.textContent = r && r.status === 401
