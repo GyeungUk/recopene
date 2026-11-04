@@ -716,6 +716,20 @@ h1,h2,h3,h4,b,strong,.title,.hero-slogan,.zoom-line,.outro,.final-line,.finale-s
 </main>
 <footer class="foot inner">Team HEEHEE · 광명시 청년생각 펼침 사업 2026<br>시중 제품 리뷰 조사 자료 참고 · 제품 및 패키지 이미지는 개발 구상안입니다.<br><a href="/survey/privacy.html">개인정보 처리방침</a></footer>
 
+<!-- promo links carry utm_* (recopene.site/?utm_source=…). The survey links keep them, so a visitor who goes on to the survey
+     in another browser (KakaoTalk's in-app browser hands Google sign-in to the real browser) still lands with the same campaign -->
+<script>
+(function(){
+  try{
+    var utm = new URLSearchParams();
+    new URLSearchParams(location.search).forEach(function(v, k){ if(/^utm_/i.test(k) && v) utm.append(k, v); });
+    var qs = utm.toString();
+    if(!qs) return;
+    document.querySelectorAll('a[href="survey/"]').forEach(function(a){ a.setAttribute('href', 'survey/?' + qs); });
+  }catch(e){}
+})();
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
